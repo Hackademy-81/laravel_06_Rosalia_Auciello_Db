@@ -12,9 +12,14 @@
           <li class="nav-item">
             <a class="nav-link" href="{{route('pageFormArticle')}}">Crea</a>
           </li>
+          @guest
           <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
+            <a class="nav-link" href="{{route('register')}}">Registrati</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('login')}}">Accedi</a>
+          </li>
+          @endguest
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Dropdown link
@@ -25,6 +30,21 @@
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
           </li>
+          @auth
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Benvenuto {{Auth::user()->name}}
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{{route('logout')}}" onclick="event.preventDefault();
+              document.getElementById('logout-form').submit();">Logout</a></li>
+              <form id="logout-form"  action="{{route('logout')}}" method="POST" class="d-none">@csrf</form>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('article.user')}}">I tuoi articoli</a>
+          </li>
+          @endauth
         </ul>
       </div>
     </div>

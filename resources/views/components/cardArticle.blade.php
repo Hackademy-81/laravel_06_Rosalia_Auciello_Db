@@ -5,6 +5,20 @@
       <p class="card-text">{{$article['title']}}</p>
       <p class="card-text">{{$article->getdescriptionSubstring()}}</p>
       <p class="card-text">Caricato il: {{$article->getFormatDate()}}</p>
-      <a href="#" class="btn btn-primary">Scopri di più</a>
+      @if(Route::currentRouteName()=='homePage')
+      <a href="{{route('pageDetail', ['idArticle'=>$article['id']])}}" class="btn btn-primary">Scopri di più</a>
+      @else
+      <div class="d-flex justify-content-center"> 
+        <a href="{{route('homePage')}}" class="btn btn-primary mx-2">Torna alla Home</a>
+        @if (Auth::user()->name==$article['author'])
+              <a href="{{route('article.update', ['article'=>$article])}}" class="btn btn-warning mx-2">Modifica</a>
+              <form action="{{route('article.delete', ['article'=>$article])}}" method="POST">
+                @csrf
+                @method('delete')
+                <button type="submit" class="btn btn-danger">Elimina</button>
+              </form>
+        @endif
+      </div>    
+      @endif
     </div>
 </div>
